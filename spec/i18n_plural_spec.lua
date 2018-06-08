@@ -3,10 +3,10 @@ require 'spec.fixPackagePath'
 local plural = require 'i18n.plural'
 
 describe('i18n.plural', function()
-  before(plural.reset)
+  before_each(plural.reset)
 
   it("exists", function()
-    assert_equal('table', type(plural))
+    assert.equal('table', type(plural))
   end)
 
   describe('plural.get', function()
@@ -18,12 +18,12 @@ describe('i18n.plural', function()
         for _,locale in ipairs(locales) do
           for plural_form, numbers in pairs(plural_forms) do
             numbers = type(numbers) == 'table' and numbers or {numbers}
-            for _,n in ipairs(numbers) do
-              it(('%s translates %s into %q'):format(locale, n, plural_form), function()
-                assert_equal(plural.get(locale, n), plural_form)
-                assert_equal(plural.get(locale, -n), plural_form)
-              end)
-            end
+            it(('%s translates numbers into their correct plural form'):format(locale), function()
+              for _,n in ipairs(numbers) do
+                assert.equal(plural.get(locale, n), plural_form)
+                assert.equal(plural.get(locale, -n), plural_form)
+              end
+            end)
           end
         end
       end)
@@ -39,20 +39,13 @@ describe('i18n.plural', function()
     end
 
     it('throws an error with the wrong parameters', function()
-      assert_error(function() plural.get() end)
-      assert_error(function() plural.get(1,1) end)
-      assert_error(function() plural.get('en', 'en') end)
+      assert.error(function() plural.get() end)
+      assert.error(function() plural.get(1,1) end)
+      assert.error(function() plural.get('en', 'en') end)
     end)
 
 
-    test_get('f1', words([[
-      af asa bem bez bg bn brx ca cgg chr da de dv ee el
-      en eo es et eu fi fo fur fy gl gsw gu ha haw he is
-      it jmc kaj kcg kk kl ksb ku lb lg mas ml mn mr nah
-      nb nd ne nl nn no nr ny nyn om or pa pap ps pt rm
-      rof rwk saq seh sn so sq ss ssy st sv sw syr ta te
-      teo tig tk tn ts ur ve vun wae xh xog zu
-    ]]), {
+    test_get('f1', words([[ af en it nb rof teo ]]), {
       one   = 1,
       other = {0, 2, 999, 0.5, 1.2, 2.07}
     })
@@ -73,7 +66,6 @@ describe('i18n.plural', function()
 
     test_get('f4', words([[
       az bm bo dz fa hu id ig ii ja jv ka kde kea km kn
-      ko lo ms my root sah ses sg th to tr vi wo yo zh
     ]]), {
       other = {0 , 1, 1000, 0.5}
     })
@@ -207,7 +199,7 @@ describe('i18n.plural', function()
 
     describe("When the locale is not found", function()
       describe("When a default function is set", function()
-        before(function()
+        before_each(function()
           plural.setDefaultFunction(function() return 'nothing' end)
         end)
 

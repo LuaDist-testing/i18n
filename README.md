@@ -1,6 +1,8 @@
 i18n.lua
 ========
 
+[![Build Status](https://travis-ci.org/kikito/i18n.lua.png?branch=master)](https://travis-ci.org/kikito/i18n.lua)
+
 A very complete i18n lib for Lua
 
 Description
@@ -103,6 +105,6 @@ The parents of a locale are found by splitting the locale by its hyphens. Other 
 
 Specs
 =====
-This project uses [telescope](https://github.com/norman/telescope) for its specs. If you want to run the specs, you will have to install telescope first. Then just execute the following from the root inspect folder:
+This project uses [busted](https://github.com/olivinelabs/busted) for its specs. If you want to run the specs, you will have to install it first. Then just execute the following from the root inspect folder:
 
-    tsc -f spec/*
+    busted
