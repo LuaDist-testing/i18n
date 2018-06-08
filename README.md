@@ -12,18 +12,20 @@ Description
 i18n = require 'i18n'
 
 -- loading stuff
-i18n.set('en.welcome', 'welcome to this program')
+i18n.set('welcome', 'welcome to this program')
 i18n.load({
   en = {
     good_bye = "good-bye!",
-    age_msg = "your age is %{age}."
+    age_msg = "your age is %{age}.",
     phone_msg = {
       one = "you have one new message.",
       other = "you have %{count} new messages."
     }
   }
 })
-i18n.loadFile('path/to/your/files/en.lua') -- maybe load some more stuff from that file
+i18n.loadFile('path/to/your/project/i18n/de.lua') -- load German language file
+i18n.loadFile('path/to/your/project/i18n/fr.lua') -- load French language file
+…         -- section 'using language files' below describes structure of files
 
 -- setting the translation context
 i18n.setLocale('en') -- English is the default locale anyway
@@ -45,13 +47,13 @@ You can interpolate variables in 3 different ways:
 
 ``` lua
 -- the most usual one
-i18n.set('en.variables', 'Interpolating variables: %{name} %{age}')
+i18n.set('variables', 'Interpolating variables: %{name} %{age}')
 i18n('variables', {name='john', 'age'=10}) -- Interpolating variables: john 10
 
-i18n.set('en.lua', 'Traditional Lua way: %d %s')
+i18n.set('lua', 'Traditional Lua way: %d %s')
 i18n('lua', {1, 'message'}) -- Traditional Lua way: 1 message
 
-i18n.set('en.combined', 'Combined: %<name>.q %<age>.d %<age>.o')
+i18n.set('combined', 'Combined: %<name>.q %<age>.d %<age>.o')
 i18n('combined', {name='john', 'age'=10}) -- Combined: john 10 12k
 ```
 
@@ -102,6 +104,58 @@ When a value is not found, the lib has several fallback mechanisms:
 * Otherwise the translation will return nil.
 
 The parents of a locale are found by splitting the locale by its hyphens. Other separation characters (spaces, underscores, etc) are not supported.
+
+Using language files
+====================
+
+It might be a good idea to store each translation in a different file. This is supported via the 'i18n.loadFile' directive:
+
+``` lua
+…
+i18n.loadFile('path/to/your/project/i18n/de.lua') -- German translation
+i18n.loadFile('path/to/your/project/i18n/en.lua') -- English translation
+i18n.loadFile('path/to/your/project/i18n/fr.lua') -- French translation
+…
+```
+
+The German language file 'de.lua' should read:
+
+``` lua
+return {
+  de = {
+    good_bye = "Auf Wiedersehen!",
+    age_msg = "Ihr Alter beträgt %{age}.",
+    phone_msg = {
+      one = "Sie haben eine neue Nachricht.",
+      other = "Sie haben %{count} neue Nachrichten."
+    }
+  }
+}
+```
+
+If desired, you can also store all translations in one single file (eg. 'translations.lua'):
+
+``` lua
+return {
+  de = {
+    good_bye = "Auf Wiedersehen!",
+    age_msg = "Ihr Alter beträgt %{age}.",
+    phone_msg = {
+      one = "Sie haben eine neue Nachricht.",
+      other = "Sie haben %{count} neue Nachrichten."
+    }
+  },
+  fr = {
+    good_bye = "Au revoir !",
+    age_msg = "Vous avez %{age} ans.",
+    phone_msg = {
+      one = "Vous avez une noveau message.",
+      other = "Vous avez %{count} noveaux messages."
+    }
+  },
+  …
+}
+```
 
 Specs
 =====

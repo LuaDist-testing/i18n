@@ -1,16 +1,16 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = "i18n"
-version = "0.9.1-1"
+version = "0.9.2-1"
 -- LuaDist source
 source = {
-  tag = "0.9.1-1",
+  tag = "0.9.2-1",
   url = "git://github.com/LuaDist-testing/i18n.git"
 }
 -- Original source
 -- source = {
---   url = "https://github.com/kikito/i18n.lua/archive/v0.9.1.tar.gz",
---   dir = "i18n.lua-0.9.1"
+--   url = "https://github.com/kikito/i18n.lua/archive/v0.9.2.tar.gz",
+--   dir = "i18n.lua-0.9.2"
 -- }
 description = {
   summary = "A very complete internationalization library for Lua",
